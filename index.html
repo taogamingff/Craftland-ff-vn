@@ -1,419 +1,2449 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UGC Settings Editor</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+
+    <title>Craftland Free Fire 🔥 - Trình chỉnh sửa UGC</title>
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #f4f7f9; color: #333; line-height: 1.5; }
-        .container { max-width: 1100px; margin: 20px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); overflow: hidden; }
-        .header { background: #1a202c; color: #fff; padding: 30px; text-align: center; }
-        .header h1 { font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }
-        .upload-section { padding: 25px; border-bottom: 1px solid #edf2f7; text-align: center; }
-        .upload-box { border: 2px dashed #cbd5e0; border-radius: 8px; padding: 30px; cursor: pointer; transition: 0.2s; background: #fff; }
-        .upload-box:hover { border-color: #4a90e2; background: #f8fbff; }
-        .upload-box.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
-        input[type="file"] { display: none; }
-        .category-section { margin: 20px; border: 1px solid #e2e8f0; border-radius: 8px; }
-        .category-header { background: #edf2f7; padding: 12px 20px; font-weight: 700; font-size: 14px; color: #4a5568; border-bottom: 1px solid #e2e8f0; text-transform: uppercase; }
-        .settings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: #e2e8f0; }
-        .setting-item { background: #fff; padding: 15px 20px; display: flex; flex-direction: column; justify-content: center; }
-        .setting-item h3 { font-size: 13px; color: #2d3748; margin-bottom: 8px; font-weight: 600; }
-        input[type="number"], select { width: 100%; padding: 8px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 14px; }
-        .checkbox-container { display: flex; align-items: center; justify-content: space-between; cursor: pointer; width: 100%; }
-        .checkbox-container input { width: 18px; height: 18px; }
-        .button-group { padding: 30px; text-align: center; }
-        .btn { padding: 12px 35px; font-weight: 700; border-radius: 6px; cursor: pointer; border: none; transition: 0.2s; }
-        .btn-primary { background: #4a90e2; color: white; }
-        .btn-primary:hover { background: #357abd; }
-        .status-msg { padding: 15px; margin: 15px 20px; border-radius: 6px; font-size: 14px; }
-        .error-box { background: #fff5f5; border: 1px solid #feb2b2; color: #c53030; }
-        .info-box { background: #ebf8ff; border: 1px solid #bee3f8; color: #2b6cb0; }
-        .hidden { display: none !important; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --cyan: #00e5ff;
+            --green: #00ff9d;
+            --blue: #1677ff;
+            --purple: #7957ff;
+            --bg: #020711;
+            --panel: rgba(6, 15, 29, .88);
+            --panel2: rgba(10, 23, 42, .92);
+            --text: #edf9ff;
+            --muted: #91a9bd;
+        }
+
+        body {
+            font-family:
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow-x: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(0,229,255,.17),
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(0,255,157,.13),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(121,87,255,.16),
+                    transparent 34%
+                ),
+                linear-gradient(
+                    135deg,
+                    #01040a 0%,
+                    #03101c 42%,
+                    #02050b 100%
+                );
+        }
+
+        /* GRID NỀN */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+            z-index: -5;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 42px 42px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black 0%,
+                    rgba(0,0,0,.8) 45%,
+                    transparent 100%
+                );
+
+            -webkit-mask-image:
+                linear-gradient(
+                    to bottom,
+                    black 0%,
+                    rgba(0,0,0,.8) 45%,
+                    transparent 100%
+                );
+        }
+
+        /* ÁNH SÁNG 3D */
+
+        body::after {
+            content: "";
+
+            position: fixed;
+            width: 480px;
+            height: 480px;
+
+            left: -220px;
+            bottom: -230px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(0,229,255,.16),
+                    transparent 68%
+                );
+
+            filter: blur(45px);
+
+            pointer-events: none;
+            z-index: -4;
+
+            animation: ambientMove 8s ease-in-out infinite;
+        }
+
+        @keyframes ambientMove {
+            0%,100% {
+                transform: translate3d(0,0,0);
+            }
+
+            50% {
+                transform: translate3d(40px,-25px,0);
+            }
+        }
+
+        /* CONTAINER */
+
+        .container {
+            position: relative;
+
+            width: calc(100% - 24px);
+            max-width: 1150px;
+
+            margin: 20px auto;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(7,17,32,.94),
+                    rgba(2,7,15,.96)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.10);
+
+            border-radius: 24px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 40px 100px rgba(0,0,0,.65),
+                0 0 80px rgba(0,229,255,.06),
+                inset 0 1px 0 rgba(255,255,255,.07);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            transform: translateZ(0);
+        }
+
+        .container::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            pointer-events: none;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,229,255,.055),
+                    transparent 28%,
+                    transparent 70%,
+                    rgba(0,255,157,.035)
+                );
+        }
+
+        /* HEADER */
+
+        .header {
+            position: relative;
+
+            min-height: 190px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 45px 20px;
+
+            text-align: center;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% -50%,
+                    rgba(0,229,255,.30),
+                    transparent 55%
+                ),
+                linear-gradient(
+                    135deg,
+                    rgba(0,229,255,.10),
+                    rgba(0,255,157,.04),
+                    rgba(121,87,255,.10)
+                ),
+                rgba(2,8,17,.94);
+
+            border-bottom:
+                1px solid rgba(0,229,255,.20);
+
+            box-shadow:
+                inset 0 -20px 60px rgba(0,0,0,.20);
+        }
+
+        /* đường sáng */
+
+        .header::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--cyan),
+                    var(--green),
+                    var(--cyan),
+                    transparent
+                );
+
+            box-shadow:
+                0 0 8px var(--cyan),
+                0 0 25px rgba(0,229,255,.7);
+        }
+
+        .header::before {
+            content: "";
+
+            position: absolute;
+
+            width: 360px;
+            height: 360px;
+
+            top: -260px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(0,229,255,.20),
+                    transparent 68%
+                );
+
+            filter: blur(25px);
+
+            animation:
+                headerGlow 5s ease-in-out infinite;
+        }
+
+        @keyframes headerGlow {
+            0%,100% {
+                opacity: .65;
+                transform: translateX(-50%) scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.12);
+            }
+        }
+
+        .header h1 {
+            position: relative;
+            z-index: 2;
+
+            font-size:
+                clamp(25px, 6vw, 44px);
+
+            font-weight: 900;
+
+            letter-spacing:
+                clamp(1px, .35vw, 3px);
+
+            text-transform: uppercase;
+
+            color: #ffffff;
+
+            text-shadow:
+                0 2px 0 #020912,
+                0 4px 0 rgba(0,0,0,.35),
+                0 0 12px rgba(0,229,255,.95),
+                0 0 32px rgba(0,229,255,.45),
+                0 0 60px rgba(0,255,157,.18);
+
+            transform:
+                perspective(500px)
+                translateZ(30px);
+        }
+
+        .header h1::after {
+            content: "";
+
+            display: block;
+
+            width: 135px;
+            height: 3px;
+
+            margin:
+                17px auto 0;
+
+            border-radius: 99px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--cyan),
+                    var(--green)
+                );
+
+            box-shadow:
+                0 0 8px var(--cyan),
+                0 0 22px rgba(0,255,157,.65);
+        }
+
+        /* UPLOAD */
+
+        .upload-section {
+            padding: 30px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.07);
+        }
+
+        .upload-box {
+            position: relative;
+
+            min-height: 125px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px 20px;
+
+            border:
+                2px dashed rgba(0,229,255,.40);
+
+            border-radius: 18px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            color: #dff8ff;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(0,229,255,.08),
+                    rgba(0,255,157,.035)
+                ),
+                rgba(255,255,255,.018);
+
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,.06),
+                inset 0 0 35px rgba(0,229,255,.025),
+                0 15px 35px rgba(0,0,0,.22);
+
+            transition:
+                .3s ease;
+        }
+
+        .upload-box:hover {
+            transform:
+                translateY(-4px)
+                perspective(700px)
+                rotateX(2deg);
+
+            border-color:
+                var(--cyan);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(0,229,255,.14),
+                    rgba(0,255,157,.055)
+                ),
+                rgba(255,255,255,.025);
+
+            box-shadow:
+                0 22px 50px rgba(0,0,0,.38),
+                0 0 35px rgba(0,229,255,.12),
+                inset 0 0 35px rgba(0,229,255,.04);
+        }
+
+        .upload-box::before {
+            content: "✦";
+
+            position: absolute;
+
+            top: 9px;
+            right: 18px;
+
+            color: var(--cyan);
+
+            font-size: 18px;
+
+            animation:
+                starFloat 3s ease-in-out infinite;
+        }
+
+        .upload-box::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            border-radius: inherit;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    115deg,
+                    transparent 20%,
+                    rgba(255,255,255,.055) 50%,
+                    transparent 80%
+                );
+
+            transform:
+                translateX(-120%);
+
+            transition:
+                transform .7s ease;
+        }
+
+        .upload-box:hover::after {
+            transform:
+                translateX(120%);
+        }
+
+        .upload-box.disabled {
+            opacity: .45;
+            pointer-events: none;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        @keyframes starFloat {
+            0%,100% {
+                transform: translateY(0);
+                opacity: .45;
+            }
+
+            50% {
+                transform: translateY(-6px);
+                opacity: 1;
+            }
+        }
+
+        /* MESSAGE */
+
+        .status-msg {
+            margin: 18px 22px;
+
+            padding: 14px 17px;
+
+            border-radius: 11px;
+
+            font-size: 14px;
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .info-box {
+            color: #a8efff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,190,255,.10),
+                    rgba(0,255,157,.035)
+                );
+
+            border:
+                1px solid rgba(0,229,255,.25);
+
+            box-shadow:
+                0 0 25px rgba(0,190,255,.05);
+        }
+
+        .error-box {
+            color: #ffadb7;
+
+            background:
+                rgba(255,50,75,.08);
+
+            border:
+                1px solid rgba(255,70,90,.35);
+
+            box-shadow:
+                0 0 25px rgba(255,50,75,.06);
+        }
+
+        /* CATEGORY */
+
+        .category-section {
+            position: relative;
+
+            margin: 22px;
+
+            overflow: hidden;
+
+            border:
+                1px solid rgba(255,255,255,.09);
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,.015);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.26),
+                inset 0 1px 0 rgba(255,255,255,.035);
+
+            transition:
+                .28s ease;
+        }
+
+        .category-section:hover {
+            transform:
+                translateY(-2px);
+
+            border-color:
+                rgba(0,229,255,.20);
+
+            box-shadow:
+                0 22px 50px rgba(0,0,0,.34),
+                0 0 25px rgba(0,229,255,.045);
+        }
+
+        .category-header {
+            position: relative;
+
+            padding:
+                16px 21px;
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            letter-spacing:
+                .8px;
+
+            text-transform:
+                uppercase;
+
+            color:
+                #ecfcff;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(0,229,255,.12),
+                    rgba(0,255,157,.045),
+                    transparent
+                );
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+            text-shadow:
+                0 0 12px rgba(0,229,255,.35);
+        }
+
+        .category-header::before {
+            content: "";
+
+            display: inline-block;
+
+            width: 8px;
+            height: 8px;
+
+            margin-right: 10px;
+
+            border-radius: 50%;
+
+            vertical-align: 1px;
+
+            background:
+                var(--cyan);
+
+            box-shadow:
+                0 0 8px var(--cyan),
+                0 0 18px rgba(0,229,255,.65);
+        }
+
+        /* SETTINGS */
+
+        .settings-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(300px,1fr)
+                );
+
+            gap: 1px;
+
+            background:
+                rgba(255,255,255,.055);
+        }
+
+        .setting-item {
+            position: relative;
+
+            min-height: 78px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            padding:
+                16px 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(12,25,43,.98),
+                    rgba(4,12,23,.98)
+                );
+
+            transition:
+                .22s ease;
+
+            overflow: hidden;
+        }
+
+        .setting-item::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    transparent 20%,
+                    rgba(255,255,255,.035) 50%,
+                    transparent 80%
+                );
+
+            transform:
+                translateX(-120%);
+
+            transition:
+                transform .55s ease;
+        }
+
+        .setting-item:hover {
+            z-index: 2;
+
+            transform:
+                translateY(-2px)
+                scale(1.008);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(14,38,58,.98),
+                    rgba(5,20,31,.98)
+                );
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,.30),
+                inset 0 0 25px rgba(0,229,255,.025);
+        }
+
+        .setting-item:hover::before {
+            transform:
+                translateX(120%);
+        }
+
+        .setting-item h3 {
+            position: relative;
+
+            font-size: 13px;
+
+            color:
+                #d9edf9;
+
+            margin-bottom:
+                9px;
+
+            font-weight:
+                750;
+
+            letter-spacing:
+                .15px;
+        }
+
+        /* INPUT */
+
+        input[type="number"] {
+            width: 100%;
+
+            padding:
+                10px 12px;
+
+            color:
+                #ecfbff;
+
+            background:
+                rgba(0,0,0,.30);
+
+            border:
+                1px solid rgba(150,190,220,.18);
+
+            border-radius:
+                9px;
+
+            font-size:
+                14px;
+
+            outline:
+                none;
+
+            transition:
+                .2s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color:
+                var(--cyan);
+
+            background:
+                rgba(0,229,255,.045);
+
+            box-shadow:
+                0 0 0 2px rgba(0,229,255,.08),
+                0 0 18px rgba(0,229,255,.10);
+        }
+
+        /* SWITCH */
+
+        .checkbox-container {
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            cursor: pointer;
+
+            color:
+                #dcecff;
+
+            font-size:
+                13px;
+
+            font-weight:
+                700;
+        }
+
+        .checkbox-container input {
+            appearance: none;
+            -webkit-appearance: none;
+
+            position: relative;
+
+            width: 46px;
+            height: 24px;
+
+            flex:
+                0 0 46px;
+
+            border:
+                1px solid rgba(160,190,215,.25);
+
+            border-radius:
+                30px;
+
+            background:
+                #111c29;
+
+            cursor:
+                pointer;
+
+            transition:
+                .25s ease;
+        }
+
+        .checkbox-container input::before {
+            content: "";
+
+            position: absolute;
+
+            width: 18px;
+            height: 18px;
+
+            top: 2px;
+            left: 3px;
+
+            border-radius:
+                50%;
+
+            background:
+                #78899b;
+
+            box-shadow:
+                0 2px 6px rgba(0,0,0,.5);
+
+            transition:
+                .25s ease;
+        }
+
+        .checkbox-container input:checked {
+            background:
+                linear-gradient(
+                    90deg,
+                    #007db8,
+                    #00c978
+                );
+
+            border-color:
+                rgba(0,229,255,.70);
+
+            box-shadow:
+                0 0 12px rgba(0,229,255,.25);
+        }
+
+        .checkbox-container input:checked::before {
+            transform:
+                translateX(21px);
+
+            background:
+                #fff;
+
+            box-shadow:
+                0 0 9px rgba(255,255,255,.7),
+                0 2px 6px rgba(0,0,0,.4);
+        }
+
+        /* BUTTON */
+
+        .button-group {
+            padding:
+                32px 25px 40px;
+
+            text-align:
+                center;
+        }
+
+        .btn {
+            position: relative;
+
+            min-width:
+                230px;
+
+            padding:
+                14px 36px;
+
+            border:
+                1px solid rgba(255,255,255,.16);
+
+            border-radius:
+                11px;
+
+            cursor:
+                pointer;
+
+            font-size:
+                14px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .4px;
+
+            overflow:
+                hidden;
+
+            transition:
+                .22s ease;
+        }
+
+        .btn::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: -120%;
+
+            width: 80%;
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,.28),
+                    transparent
+                );
+
+            transform:
+                skewX(-20deg);
+
+            transition:
+                left .55s ease;
+        }
+
+        .btn:hover::before {
+            left:
+                140%;
+        }
+
+        .btn-primary {
+            color:
+                #001015;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--cyan),
+                    var(--green)
+                );
+
+            box-shadow:
+                0 12px 35px rgba(0,229,255,.22),
+                0 0 25px rgba(0,255,157,.13),
+                inset 0 1px 0 rgba(255,255,255,.5);
+
+            text-shadow:
+                0 1px rgba(255,255,255,.35);
+        }
+
+        .btn-primary:hover {
+            transform:
+                translateY(-4px)
+                scale(1.025);
+
+            filter:
+                brightness(1.08);
+
+            box-shadow:
+                0 18px 45px rgba(0,229,255,.30),
+                0 0 35px rgba(0,255,157,.22),
+                inset 0 1px 0 rgba(255,255,255,.55);
+        }
+
+        .btn-primary:active {
+            transform:
+                translateY(0)
+                scale(.99);
+        }
+
+        .hidden {
+            display:
+                none !important;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .container {
+                width:
+                    calc(100% - 14px);
+
+                margin:
+                    7px auto;
+
+                border-radius:
+                    18px;
+            }
+
+            .header {
+                min-height:
+                    155px;
+
+                padding:
+                    34px 15px;
+            }
+
+            .header h1 {
+                font-size:
+                    24px;
+
+                letter-spacing:
+                    1px;
+            }
+
+            .upload-section {
+                padding:
+                    20px;
+            }
+
+            .upload-box {
+                min-height:
+                    115px;
+
+                padding:
+                    25px 15px;
+            }
+
+            .category-section {
+                margin:
+                    14px;
+            }
+
+            .settings-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .setting-item {
+                min-height:
+                    72px;
+            }
+
+            .button-group {
+                padding:
+                    25px 18px 32px;
+            }
+
+            .btn {
+                width:
+                    100%;
+
+                min-width:
+                    0;
+            }
+
+            .status-msg {
+                margin:
+                    15px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎮 UGC Settings Editor</h1>
-        </div>
 
-        <div id="loadingIndicator" class="status-msg info-box" style="text-align: center;">
-            ⚙️ Đang tải thư viện Protobuf...
-        </div>
+<div class="container">
 
-        <div class="upload-section">
-            <div class="upload-box disabled" id="uploadBox">
-                <input type="file" id="fileInput" accept=".bin,.dat,.bytes,*">
-                <span id="uploadText">📁 Nhấn để chọn file Map Project</span>
-            </div>
-        </div>
+    <!-- HEADER -->
 
-        <div id="infoBox" class="status-msg info-box hidden">✅ Đã tải file! Bạn có thể chỉnh sửa các cài đặt.</div>
-        <div id="errorBox" class="status-msg error-box hidden"></div>
-
-        <div id="settingsContainer"></div>
-
-        <div class="button-group hidden" id="buttonGroup">
-            <button class="btn btn-primary" id="downloadBtn">💾 Lưu &amp; Tải xuống</button>
-        </div>
+    <div class="header">
+        <h1>🔥 Craftland Free Fire 🔥</h1>
     </div>
 
-    <!-- Load protobuf.js -->
-    <script src="https://cdn.jsdelivr.net/npm/protobufjs@7.2.5/dist/protobuf.min.js"></script>
+    <!-- LOADING -->
 
-    <script>
-    // ============================================================
-    // 1) SCHEMA PROTOBUF (inline, không phụ thuộc /resource)
-    // ============================================================
-    const protoSchema = `
-        syntax = "proto3";
-        message UGCProjectData {
-            bytes graph_editor_project = 1;
-            bytes workflow_editor_project = 2;
-            bytes entity_editor_project = 3;
-            bytes hud_editor_project = 4;
-            bytes map_editor_project = 5;
-            Root ShahGCreator = 6;
-            uint64 author_uid = 7;
-            bytes custom_resources_package = 8;
-            bytes timeline_editor_project = 9;
-            bytes user_custom_event_editor_project = 10;
-            int32 compatible_version = 999;
-            int32 public_version = 1000;
-        }
-        message Root {
-            repeated SettingsWrapper settings = 1;
-            int32 version = 3;
-        }
-        message SettingsWrapper {
-            repeated Settings settings = 1;
-        }
-        message Settings {
-            int32 id = 1;
-            bool enable = 2;
-            int32 value = 3;
-            float ratio = 4;
-        }
-    `;
+    <div
+        id="loadingIndicator"
+        class="status-msg info-box"
+        style="text-align:center;"
+    >
+        ⚙️ Đang tải hệ thống Protobuf...
+    </div>
 
-    // ============================================================
-    // 2) METADATA CỦA SETTINGS
-    // ============================================================
-    const settingsMetadata = [
-        {"ID":1,"Name":"ModeTemplateID","Type":"int"},
-        {"ID":3,"Name":"HumanCanRevive","Type":"boolean"},
-        {"ID":4,"Name":"BotCanRevive","Type":"boolean"},
-        {"ID":5,"Name":"ReviveCDTime","Type":"int"},
-        {"ID":6,"Name":"TeamNum","Type":"int"},
-        {"ID":7,"Name":"TeamMemberNum","Type":"int"},
-        {"ID":8,"Name":"RoundCount","Type":"int"},
-        {"ID":9,"Name":"RoundTime","Type":"int"},
-        {"ID":10,"Name":"ResetEquipment","Type":"boolean"},
-        {"ID":11,"Name":"SafeZoneEnabled","Type":"boolean"},
-        {"ID":12,"Name":"SafeZoneSize","Type":"float"},
-        {"ID":13,"Name":"SafeZoneStartTime","Type":"float"},
-        {"ID":14,"Name":"SafeZoneDamage","Type":"float"},
-        {"ID":15,"Name":"MaxHP","Type":"int"},
-        {"ID":16,"Name":"MaxEP","Type":"int"},
-        {"ID":17,"Name":"StartEP","Type":"int"},
-        {"ID":18,"Name":"AutoHealing","Type":"boolean"},
-        {"ID":19,"Name":"Damage","Type":"int"},
-        {"ID":20,"Name":"Damaged","Type":"int"},
-        {"ID":21,"Name":"MoveSpeed","Type":"float"},
-        {"ID":22,"Name":"JumpHeight","Type":"float"},
-        {"ID":23,"Name":"LimitedAmmo","Type":"boolean"},
-        {"ID":24,"Name":"TargetScore","Type":"int"},
-        {"ID":25,"Name":"KillingScore","Type":"int"},
-        {"ID":26,"Name":"ReviveRule","Type":"int"},
-        {"ID":27,"Name":"MultiRoundsEnabled","Type":"boolean"},
-        {"ID":28,"Name":"SafeZoneShrinkTime","Type":"float"},
-        {"ID":29,"Name":"RoundPreparingTime","Type":"int"},
-        {"ID":30,"Name":"EnableActiveSkill","Type":"boolean"},
-        {"ID":31,"Name":"EnablePassiveSkill","Type":"boolean"},
-        {"ID":75,"Name":"EcoRoundMoney","Type":"int"},
-        {"ID":76,"Name":"EcoKillMoney","Type":"int"},
-        {"ID":77,"Name":"EcoWinMoney","Type":"int"},
-        {"ID":78,"Name":"CoinHudShow","Type":"boolean"},
-        {"ID":79,"Name":"ReviveSwitch","Type":"boolean"},
-        {"ID":82,"Name":"MinNumOfMatchStart","Type":"int"},
-        {"ID":88,"Name":"PetEnable","Type":"boolean"},
-        {"ID":89,"Name":"PetSkillEnable","Type":"boolean"},
-        {"ID":99,"Name":"CameraType","Type":"int"},
-        {"ID":100,"Name":"CameraFov","Type":"int"},
-        {"ID":101,"Name":"CameraPitch","Type":"float"},
-        {"ID":102,"Name":"CameraYaw","Type":"float"},
-        {"ID":103,"Name":"CameraDistance","Type":"float"},
-        {"ID":104,"Name":"CameraOffset","Type":"int"},
-        {"ID":129,"Name":"ObserverMode","Type":"int"},
-        {"ID":130,"Name":"ObserverModeEnable","Type":"boolean"},
-        {"ID":132,"Name":"CameraProjectionMode","Type":"int"},
-        {"ID":133,"Name":"CameraBlockMode","Type":"int"},
-        {"ID":134,"Name":"MorphModeDisableTemplate","Type":"boolean"},
-        {"ID":135,"Name":"RecommendStartGameNumber","Type":"int"},
-        {"ID":136,"Name":"EnableHalfwayJoin","Type":"boolean"},
-        {"ID":137,"Name":"HalfwayJoinEffectTime","Type":"int"},
-        {"ID":138,"Name":"HalfwayJoinNumberLimit","Type":"boolean"},
-        {"ID":139,"Name":"HalfwayJoinNumber","Type":"int"},
-        {"ID":140,"Name":"EnableHalfwayJoinEffectTime","Type":"boolean"},
-        {"ID":141,"Name":"EnableWeaponSkinProperty","Type":"boolean"},
-        {"ID":142,"Name":"EnableWeaponSkillProperty","Type":"boolean"},
-        {"ID":143,"Name":"EnableDeathObserve","Type":"boolean"},
-        {"ID":144,"Name":"UnlimitedBullet","Type":"boolean"},
-        {"ID":145,"Name":"UnlimitedGloowall","Type":"boolean"},
-        {"ID":146,"Name":"UnlimitedThrowables","Type":"boolean"},
-        {"ID":147,"Name":"TwoDimensionCamEnableZAxis","Type":"boolean"},
-        {"ID":148,"Name":"EnableFreeQuit","Type":"boolean"},
-        {"ID":149,"Name":"AllowHangUpTime","Type":"int"},
-        {"ID":150,"Name":"DisableReconnect","Type":"boolean"},
-        {"ID":151,"Name":"EnableTotalToken","Type":"boolean"},
-        {"ID":152,"Name":"EnableUGCToken","Type":"boolean"},
-        {"ID":153,"Name":"EnableMiniMapV2","Type":"boolean"},
-        {"ID":154,"Name":"DisableDepthMap","Type":"boolean"},
-        {"ID":155,"Name":"EnableRuntimeDynamicNavMesh","Type":"boolean"},
-        {"ID":156,"Name":"EnableEnergySavingMode","Type":"boolean"},
-        {"ID":170,"Name":"EnableInventoryDrop","Type":"boolean"},
-        {"ID":171,"Name":"UGCObserverCameraMode","Type":"int"},
-        {"ID":172,"Name":"HideObserverDropButton","Type":"boolean"},
-        {"ID":174,"Name":"IsDownFPPResource","Type":"boolean"},
-        {"ID":175,"Name":"EnableQuickStartMatch","Type":"boolean"},
-        {"ID":176,"Name":"EnablePveWeaponSkinProperty","Type":"boolean"},
-        {"ID":177,"Name":"UGCIsShowSocialChooseBox","Type":"boolean"},
-        {"ID":178,"Name":"EnableInternalWorkflowLogic","Type":"boolean"},
-        {"ID":179,"Name":"EnableAOIFilter","Type":"boolean"},
-        {"ID":180,"Name":"CameraViewingAngleRestrictionType","Type":"int"},
-        {"ID":181,"Name":"IsHoudiniUsed","Type":"boolean"},
-        {"ID":185,"Name":"DisableEnemyFootstepVibrate","Type":"boolean"},
-        {"ID":187,"Name":"IsAIGenUsed","Type":"boolean"},
-        {"ID":188,"Name":"GameStartTimeS","Type":"int"},
-        {"ID":189,"Name":"GamePrepareTimeS","Type":"int"}
-    ];
+    <!-- UPLOAD -->
 
-    // ============================================================
-    // 3) DANH MỤC HIỂN THỊ
-    // ============================================================
-    const categoryMapping = {
-        "Game Rules": ["GamePrepareTimeS","MultiRoundsEnabled","RoundCount","RoundTime","RoundPreparingTime","TeamNum","TeamMemberNum","MinNumOfMatchStart","AllowHangUpTime","EnableFreeQuit","DisableReconnect"],
-        "Player & Stats": ["MaxHP","MaxEP","StartEP","Damage","Damaged","MoveSpeed","JumpHeight","AutoHealing","UnlimitedBullet","UnlimitedGloowall","UnlimitedThrowables","EnableInventoryDrop"],
-        "Revive System": ["HumanCanRevive","BotCanRevive","ReviveCDTime","ReviveRule","ReviveSwitch"],
-        "Game Observe Setting": ["EnableDeathObserve","ObserverModeEnable","ObserverMode","UGCObserverCameraMode"],
-        "Economy": ["EnableTotalToken","EcoRoundMoney","EcoKillMoney","EcoWinMoney","CoinHudShow","EnableUGCToken"],
-        "Safe Zone": ["SafeZoneEnabled","SafeZoneSize","SafeZoneStartTime","SafeZoneDamage","SafeZoneShrinkTime"],
-        "Camera Settings": ["CameraType","CameraFov","CameraPitch","CameraYaw","CameraDistance","CameraOffset","CameraProjectionMode","CameraBlockMode","TwoDimensionCamEnableZAxis","CameraViewingAngleRestrictionType"],
-        "Player Skill and Skin": ["EnableActiveSkill","EnablePassiveSkill","PetEnable","PetSkillEnable","EnableWeaponSkinProperty","EnableWeaponSkillProperty","EnablePveWeaponSkinProperty"],
-        "Match Making Rules": ["RecommendStartGameNumber","EnableQuickStartMatch","GameStartTimeS","EnableHalfwayJoin","HalfwayJoinNumberLimit","HalfwayJoinNumber","EnableHalfwayJoinEffectTime","HalfwayJoinEffectTime"],
-        "Advanced & System": ["EnableMiniMapV2","DisableDepthMap","EnableRuntimeDynamicNavMesh","EnableEnergySavingMode","IsDownFPPResource","UGCIsShowSocialChooseBox","EnableInternalWorkflowLogic","EnableAOIFilter","IsHoudiniUsed","DisableEnemyFootstepVibrate","IsAIGenUsed","MorphModeDisableTemplate"]
-    };
+    <div class="upload-section">
 
-    // ============================================================
-    // 4) BIẾN TOÀN CỤC
-    // ============================================================
-    let UGCProjectDataType = null;   // <-- KHỞI TẠO NULL, KHÔNG ĐỂ UNDEFINED
-    let originalMessage = null;
-    let originalFileName = "";
+        <div
+            class="upload-box disabled"
+            id="uploadBox"
+        >
 
-    // ============================================================
-    // 5) KHỞI TẠO PROTOBUF (chạy ngay, không cần setTimeout)
-    // ============================================================
-    function initProtobuf() {
-        const loadingEl = document.getElementById('loadingIndicator');
-        const uploadBox = document.getElementById('uploadBox');
+            <input
+                type="file"
+                id="fileInput"
+                accept=".bin,.dat,.bytes,*"
+            >
 
-        if (typeof protobuf === 'undefined') {
-            loadingEl.className = 'status-msg error-box';
-            loadingEl.textContent = '❌ Không tải được protobuf.js. Kiểm tra kết nối mạng / chặn CDN.';
-            return;
-        }
+            <span id="uploadText">
+                📁 Nhấn để chọn File Map Project
+            </span>
 
-        try {
-            const root = protobuf.parse(protoSchema, { keepCase: true }).root;
-            UGCProjectDataType = root.lookupType("UGCProjectData");
+        </div>
 
-            // Test encode/decode để chắc chắn type hợp lệ
-            const testMsg = UGCProjectDataType.create({});
-            UGCProjectDataType.encode(testMsg).finish();
+    </div>
 
-            loadingEl.classList.add('hidden');
-            uploadBox.classList.remove('disabled');
-        } catch (e) {
-            loadingEl.className = 'status-msg error-box';
-            loadingEl.textContent = '❌ Lỗi khởi tạo schema: ' + e.message;
-        }
+    <!-- INFO -->
+
+    <div
+        id="infoBox"
+        class="status-msg info-box hidden"
+    >
+        ✅ Đã tải file thành công!
+        Bạn có thể chỉnh sửa các cài đặt bên dưới.
+    </div>
+
+    <!-- ERROR -->
+
+    <div
+        id="errorBox"
+        class="status-msg error-box hidden"
+    ></div>
+
+    <!-- SETTINGS -->
+
+    <div id="settingsContainer"></div>
+
+    <!-- DOWNLOAD -->
+
+    <div
+        class="button-group hidden"
+        id="buttonGroup"
+    >
+
+        <button
+            class="btn btn-primary"
+            id="downloadBtn"
+        >
+            💾 Lưu & Tải File Xuống
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- PROTOBUF.JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/protobufjs@7.2.5/dist/protobuf.min.js"></script>
+
+
+<script>
+
+/* ============================================================
+   1. PROTOBUF SCHEMA
+   ============================================================ */
+
+const protoSchema = `
+    syntax = "proto3";
+
+    message UGCProjectData {
+
+        bytes graph_editor_project = 1;
+        bytes workflow_editor_project = 2;
+        bytes entity_editor_project = 3;
+        bytes hud_editor_project = 4;
+        bytes map_editor_project = 5;
+
+        Root ShahGCreator = 6;
+
+        uint64 author_uid = 7;
+
+        bytes custom_resources_package = 8;
+        bytes timeline_editor_project = 9;
+        bytes user_custom_event_editor_project = 10;
+
+        int32 compatible_version = 999;
+        int32 public_version = 1000;
     }
 
-    // Gọi khởi tạo ngay sau khi DOM sẵn sàng
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initProtobuf);
-    } else {
-        initProtobuf();
+    message Root {
+
+        repeated SettingsWrapper settings = 1;
+
+        int32 version = 3;
     }
 
-    // ============================================================
-    // 6) UPLOAD FILE
-    // ============================================================
-    document.getElementById('uploadBox').addEventListener('click', function () {
-        if (!UGCProjectDataType) {
-            showError('Schema chưa sẵn sàng, vui lòng đợi 1-2 giây rồi thử lại.');
-            return;
-        }
-        document.getElementById('fileInput').click();
-    });
+    message SettingsWrapper {
 
-    document.getElementById('fileInput').addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        if (!file) return;
+        repeated Settings settings = 1;
+    }
 
-        if (!UGCProjectDataType) {
-            showError('UGCProjectDataType chưa được định nghĩa. Hãy tải lại trang.');
-            return;
-        }
+    message Settings {
 
-        originalFileName = file.name;
-        const reader = new FileReader();
-        reader.onload = function (ev) {
-            try {
-                originalMessage = UGCProjectDataType.decode(new Uint8Array(ev.target.result));
-                displaySettings();
-                document.getElementById('infoBox').classList.remove('hidden');
-                document.getElementById('errorBox').classList.add('hidden');
-            } catch (err) {
-                showError('Lỗi giải mã: ' + err.message);
+        int32 id = 1;
+
+        bool enable = 2;
+
+        int32 value = 3;
+
+        float ratio = 4;
+    }
+`;
+
+
+/* ============================================================
+   2. SETTINGS METADATA
+   ============================================================ */
+
+const settingsMetadata = [
+
+    {"ID":1,"Name":"ModeTemplateID","Type":"int"},
+    {"ID":3,"Name":"HumanCanRevive","Type":"boolean"},
+    {"ID":4,"Name":"BotCanRevive","Type":"boolean"},
+    {"ID":5,"Name":"ReviveCDTime","Type":"int"},
+    {"ID":6,"Name":"TeamNum","Type":"int"},
+    {"ID":7,"Name":"TeamMemberNum","Type":"int"},
+    {"ID":8,"Name":"RoundCount","Type":"int"},
+    {"ID":9,"Name":"RoundTime","Type":"int"},
+    {"ID":10,"Name":"ResetEquipment","Type":"boolean"},
+    {"ID":11,"Name":"SafeZoneEnabled","Type":"boolean"},
+    {"ID":12,"Name":"SafeZoneSize","Type":"float"},
+    {"ID":13,"Name":"SafeZoneStartTime","Type":"float"},
+    {"ID":14,"Name":"SafeZoneDamage","Type":"float"},
+    {"ID":15,"Name":"MaxHP","Type":"int"},
+    {"ID":16,"Name":"MaxEP","Type":"int"},
+    {"ID":17,"Name":"StartEP","Type":"int"},
+    {"ID":18,"Name":"AutoHealing","Type":"boolean"},
+    {"ID":19,"Name":"Damage","Type":"int"},
+    {"ID":20,"Name":"Damaged","Type":"int"},
+    {"ID":21,"Name":"MoveSpeed","Type":"float"},
+    {"ID":22,"Name":"JumpHeight","Type":"float"},
+    {"ID":23,"Name":"LimitedAmmo","Type":"boolean"},
+    {"ID":24,"Name":"TargetScore","Type":"int"},
+    {"ID":25,"Name":"KillingScore","Type":"int"},
+    {"ID":26,"Name":"ReviveRule","Type":"int"},
+    {"ID":27,"Name":"MultiRoundsEnabled","Type":"boolean"},
+    {"ID":28,"Name":"SafeZoneShrinkTime","Type":"float"},
+    {"ID":29,"Name":"RoundPreparingTime","Type":"int"},
+    {"ID":30,"Name":"EnableActiveSkill","Type":"boolean"},
+    {"ID":31,"Name":"EnablePassiveSkill","Type":"boolean"},
+
+    {"ID":75,"Name":"EcoRoundMoney","Type":"int"},
+    {"ID":76,"Name":"EcoKillMoney","Type":"int"},
+    {"ID":77,"Name":"EcoWinMoney","Type":"int"},
+    {"ID":78,"Name":"CoinHudShow","Type":"boolean"},
+    {"ID":79,"Name":"ReviveSwitch","Type":"boolean"},
+    {"ID":82,"Name":"MinNumOfMatchStart","Type":"int"},
+
+    {"ID":88,"Name":"PetEnable","Type":"boolean"},
+    {"ID":89,"Name":"PetSkillEnable","Type":"boolean"},
+
+    {"ID":99,"Name":"CameraType","Type":"int"},
+    {"ID":100,"Name":"CameraFov","Type":"int"},
+    {"ID":101,"Name":"CameraPitch","Type":"float"},
+    {"ID":102,"Name":"CameraYaw","Type":"float"},
+    {"ID":103,"Name":"CameraDistance","Type":"float"},
+    {"ID":104,"Name":"CameraOffset","Type":"int"},
+
+    {"ID":129,"Name":"ObserverMode","Type":"int"},
+    {"ID":130,"Name":"ObserverModeEnable","Type":"boolean"},
+
+    {"ID":132,"Name":"CameraProjectionMode","Type":"int"},
+    {"ID":133,"Name":"CameraBlockMode","Type":"int"},
+    {"ID":134,"Name":"MorphModeDisableTemplate","Type":"boolean"},
+
+    {"ID":135,"Name":"RecommendStartGameNumber","Type":"int"},
+    {"ID":136,"Name":"EnableHalfwayJoin","Type":"boolean"},
+    {"ID":137,"Name":"HalfwayJoinEffectTime","Type":"int"},
+    {"ID":138,"Name":"HalfwayJoinNumberLimit","Type":"boolean"},
+    {"ID":139,"Name":"HalfwayJoinNumber","Type":"int"},
+    {"ID":140,"Name":"EnableHalfwayJoinEffectTime","Type":"boolean"},
+
+    {"ID":141,"Name":"EnableWeaponSkinProperty","Type":"boolean"},
+    {"ID":142,"Name":"EnableWeaponSkillProperty","Type":"boolean"},
+    {"ID":143,"Name":"EnableDeathObserve","Type":"boolean"},
+    {"ID":144,"Name":"UnlimitedBullet","Type":"boolean"},
+    {"ID":145,"Name":"UnlimitedGloowall","Type":"boolean"},
+    {"ID":146,"Name":"UnlimitedThrowables","Type":"boolean"},
+    {"ID":147,"Name":"TwoDimensionCamEnableZAxis","Type":"boolean"},
+    {"ID":148,"Name":"EnableFreeQuit","Type":"boolean"},
+    {"ID":149,"Name":"AllowHangUpTime","Type":"int"},
+    {"ID":150,"Name":"DisableReconnect","Type":"boolean"},
+    {"ID":151,"Name":"EnableTotalToken","Type":"boolean"},
+    {"ID":152,"Name":"EnableUGCToken","Type":"boolean"},
+    {"ID":153,"Name":"EnableMiniMapV2","Type":"boolean"},
+    {"ID":154,"Name":"DisableDepthMap","Type":"boolean"},
+    {"ID":155,"Name":"EnableRuntimeDynamicNavMesh","Type":"boolean"},
+    {"ID":156,"Name":"EnableEnergySavingMode","Type":"boolean"},
+
+    {"ID":170,"Name":"EnableInventoryDrop","Type":"boolean"},
+    {"ID":171,"Name":"UGCObserverCameraMode","Type":"int"},
+    {"ID":172,"Name":"HideObserverDropButton","Type":"boolean"},
+    {"ID":174,"Name":"IsDownFPPResource","Type":"boolean"},
+    {"ID":175,"Name":"EnableQuickStartMatch","Type":"boolean"},
+    {"ID":176,"Name":"EnablePveWeaponSkinProperty","Type":"boolean"},
+    {"ID":177,"Name":"UGCIsShowSocialChooseBox","Type":"boolean"},
+    {"ID":178,"Name":"EnableInternalWorkflowLogic","Type":"boolean"},
+    {"ID":179,"Name":"EnableAOIFilter","Type":"boolean"},
+    {"ID":180,"Name":"CameraViewingAngleRestrictionType","Type":"int"},
+    {"ID":181,"Name":"IsHoudiniUsed","Type":"boolean"},
+    {"ID":185,"Name":"DisableEnemyFootstepVibrate","Type":"boolean"},
+    {"ID":187,"Name":"IsAIGenUsed","Type":"boolean"},
+    {"ID":188,"Name":"GameStartTimeS","Type":"int"},
+    {"ID":189,"Name":"GamePrepareTimeS","Type":"int"}
+
+];
+
+
+/* ============================================================
+   3. TÊN HIỂN THỊ TIẾNG VIỆT
+   ============================================================ */
+
+const vietnameseNames = {
+
+    ModeTemplateID:
+        "ID mẫu chế độ",
+
+    HumanCanRevive:
+        "Người chơi có thể hồi sinh",
+
+    BotCanRevive:
+        "Bot có thể hồi sinh",
+
+    ReviveCDTime:
+        "Thời gian chờ hồi sinh",
+
+    TeamNum:
+        "Số đội",
+
+    TeamMemberNum:
+        "Số thành viên mỗi đội",
+
+    RoundCount:
+        "Số vòng đấu",
+
+    RoundTime:
+        "Thời gian mỗi vòng",
+
+    ResetEquipment:
+        "Đặt lại trang bị",
+
+    SafeZoneEnabled:
+        "Bật vùng an toàn",
+
+    SafeZoneSize:
+        "Kích thước vùng an toàn",
+
+    SafeZoneStartTime:
+        "Thời gian bắt đầu vùng an toàn",
+
+    SafeZoneDamage:
+        "Sát thương vùng an toàn",
+
+    SafeZoneShrinkTime:
+        "Thời gian thu nhỏ vùng",
+
+    MaxHP:
+        "HP tối đa",
+
+    MaxEP:
+        "EP tối đa",
+
+    StartEP:
+        "EP ban đầu",
+
+    AutoHealing:
+        "Tự động hồi máu",
+
+    Damage:
+        "Sát thương",
+
+    Damaged:
+        "Sát thương nhận vào",
+
+    MoveSpeed:
+        "Tốc độ di chuyển",
+
+    JumpHeight:
+        "Độ cao nhảy",
+
+    LimitedAmmo:
+        "Giới hạn đạn",
+
+    TargetScore:
+        "Điểm mục tiêu",
+
+    KillingScore:
+        "Điểm hạ gục",
+
+    ReviveRule:
+        "Quy tắc hồi sinh",
+
+    MultiRoundsEnabled:
+        "Bật nhiều vòng đấu",
+
+    RoundPreparingTime:
+        "Thời gian chuẩn bị vòng",
+
+    EnableActiveSkill:
+        "Bật kỹ năng chủ động",
+
+    EnablePassiveSkill:
+        "Bật kỹ năng bị động",
+
+    EcoRoundMoney:
+        "Tiền mỗi vòng",
+
+    EcoKillMoney:
+        "Tiền khi hạ gục",
+
+    EcoWinMoney:
+        "Tiền khi chiến thắng",
+
+    CoinHudShow:
+        "Hiển thị tiền",
+
+    ReviveSwitch:
+        "Cho phép hồi sinh",
+
+    MinNumOfMatchStart:
+        "Số người tối thiểu bắt đầu",
+
+    PetEnable:
+        "Bật thú cưng",
+
+    PetSkillEnable:
+        "Bật kỹ năng thú cưng",
+
+    CameraType:
+        "Loại camera",
+
+    CameraFov:
+        "Góc nhìn FOV",
+
+    CameraPitch:
+        "Góc nghiêng camera",
+
+    CameraYaw:
+        "Góc xoay camera",
+
+    CameraDistance:
+        "Khoảng cách camera",
+
+    CameraOffset:
+        "Độ lệch camera",
+
+    ObserverMode:
+        "Chế độ quan sát",
+
+    ObserverModeEnable:
+        "Bật chế độ quan sát",
+
+    CameraProjectionMode:
+        "Chế độ chiếu camera",
+
+    CameraBlockMode:
+        "Chế độ chặn camera",
+
+    MorphModeDisableTemplate:
+        "Tắt mẫu Morph",
+
+    RecommendStartGameNumber:
+        "Số trận đề xuất bắt đầu",
+
+    EnableHalfwayJoin:
+        "Cho phép tham gia giữa trận",
+
+    HalfwayJoinEffectTime:
+        "Thời gian hiệu ứng tham gia",
+
+    HalfwayJoinNumberLimit:
+        "Giới hạn người tham gia giữa trận",
+
+    HalfwayJoinNumber:
+        "Số người tham gia giữa trận",
+
+    EnableHalfwayJoinEffectTime:
+        "Bật thời gian hiệu ứng",
+
+    EnableWeaponSkinProperty:
+        "Bật thuộc tính skin súng",
+
+    EnableWeaponSkillProperty:
+        "Bật kỹ năng súng",
+
+    EnableDeathObserve:
+        "Bật quan sát sau khi chết",
+
+    UnlimitedBullet:
+        "Đạn không giới hạn",
+
+    UnlimitedGloowall:
+        "Keo không giới hạn",
+
+    UnlimitedThrowables:
+        "Vật phẩm ném không giới hạn",
+
+    TwoDimensionCamEnableZAxis:
+        "Camera 2D bật trục Z",
+
+    EnableFreeQuit:
+        "Cho phép thoát tự do",
+
+    AllowHangUpTime:
+        "Thời gian treo máy",
+
+    DisableReconnect:
+        "Tắt kết nối lại",
+
+    EnableTotalToken:
+        "Bật tổng Token",
+
+    EnableUGCToken:
+        "Bật UGC Token",
+
+    EnableMiniMapV2:
+        "Bật Mini Map V2",
+
+    DisableDepthMap:
+        "Tắt bản đồ chiều sâu",
+
+    EnableRuntimeDynamicNavMesh:
+        "Bật NavMesh động",
+
+    EnableEnergySavingMode:
+        "Bật chế độ tiết kiệm năng lượng",
+
+    EnableInventoryDrop:
+        "Cho phép thả vật phẩm",
+
+    UGCObserverCameraMode:
+        "Camera quan sát UGC",
+
+    HideObserverDropButton:
+        "Ẩn nút thả khi quan sát",
+
+    IsDownFPPResource:
+        "Sử dụng tài nguyên FPP",
+
+    EnableQuickStartMatch:
+        "Bật bắt đầu trận nhanh",
+
+    EnablePveWeaponSkinProperty:
+        "Bật thuộc tính skin súng PvE",
+
+    UGCIsShowSocialChooseBox:
+        "Hiển thị hộp lựa chọn xã hội UGC",
+
+    EnableInternalWorkflowLogic:
+        "Bật logic Workflow nội bộ",
+
+    EnableAOIFilter:
+        "Bật bộ lọc AOI",
+
+    CameraViewingAngleRestrictionType:
+        "Giới hạn góc nhìn camera",
+
+    IsHoudiniUsed:
+        "Đang sử dụng Houdini",
+
+    DisableEnemyFootstepVibrate:
+        "Tắt rung bước chân địch",
+
+    IsAIGenUsed:
+        "Đang sử dụng AI tạo nội dung",
+
+    GameStartTimeS:
+        "Thời gian bắt đầu trận",
+
+    GamePrepareTimeS:
+        "Thời gian chuẩn bị trận"
+};
+
+
+/* ============================================================
+   4. DANH MỤC TIẾNG VIỆT
+   ============================================================ */
+
+const categoryMapping = {
+
+    "⚔️ Luật Trận Đấu": [
+        "GamePrepareTimeS",
+        "MultiRoundsEnabled",
+        "RoundCount",
+        "RoundTime",
+        "RoundPreparingTime",
+        "TeamNum",
+        "TeamMemberNum",
+        "MinNumOfMatchStart",
+        "AllowHangUpTime",
+        "EnableFreeQuit",
+        "DisableReconnect"
+    ],
+
+    "👤 Người Chơi & Chỉ Số": [
+        "MaxHP",
+        "MaxEP",
+        "StartEP",
+        "Damage",
+        "Damaged",
+        "MoveSpeed",
+        "JumpHeight",
+        "AutoHealing",
+        "UnlimitedBullet",
+        "UnlimitedGloowall",
+        "UnlimitedThrowables",
+        "EnableInventoryDrop"
+    ],
+
+    "❤️ Hệ Thống Hồi Sinh": [
+        "HumanCanRevive",
+        "BotCanRevive",
+        "ReviveCDTime",
+        "ReviveRule",
+        "ReviveSwitch"
+    ],
+
+    "👁️ Hệ Thống Quan Sát": [
+        "EnableDeathObserve",
+        "ObserverModeEnable",
+        "ObserverMode",
+        "UGCObserverCameraMode"
+    ],
+
+    "💰 Kinh Tế & Token": [
+        "EnableTotalToken",
+        "EcoRoundMoney",
+        "EcoKillMoney",
+        "EcoWinMoney",
+        "CoinHudShow",
+        "EnableUGCToken"
+    ],
+
+    "🛡️ Vùng An Toàn": [
+        "SafeZoneEnabled",
+        "SafeZoneSize",
+        "SafeZoneStartTime",
+        "SafeZoneDamage",
+        "SafeZoneShrinkTime"
+    ],
+
+    "🎥 Cài Đặt Camera": [
+        "CameraType",
+        "CameraFov",
+        "CameraPitch",
+        "CameraYaw",
+        "CameraDistance",
+        "CameraOffset",
+        "CameraProjectionMode",
+        "CameraBlockMode",
+        "TwoDimensionCamEnableZAxis",
+        "CameraViewingAngleRestrictionType"
+    ],
+
+    "🔥 Kỹ Năng & Skin": [
+        "EnableActiveSkill",
+        "EnablePassiveSkill",
+        "PetEnable",
+        "PetSkillEnable",
+        "EnableWeaponSkinProperty",
+        "EnableWeaponSkillProperty",
+        "EnablePveWeaponSkinProperty"
+    ],
+
+    "🎯 Luật Ghép Trận": [
+        "RecommendStartGameNumber",
+        "EnableQuickStartMatch",
+        "GameStartTimeS",
+        "EnableHalfwayJoin",
+        "HalfwayJoinNumberLimit",
+        "HalfwayJoinNumber",
+        "EnableHalfwayJoinEffectTime",
+        "HalfwayJoinEffectTime"
+    ],
+
+    "⚙️ Nâng Cao & Hệ Thống": [
+        "EnableMiniMapV2",
+        "DisableDepthMap",
+        "EnableRuntimeDynamicNavMesh",
+        "EnableEnergySavingMode",
+        "IsDownFPPResource",
+        "UGCIsShowSocialChooseBox",
+        "EnableInternalWorkflowLogic",
+        "EnableAOIFilter",
+        "IsHoudiniUsed",
+        "DisableEnemyFootstepVibrate",
+        "IsAIGenUsed",
+        "MorphModeDisableTemplate"
+    ]
+
+};
+
+
+/* ============================================================
+   5. BIẾN TOÀN CỤC
+   ============================================================ */
+
+let UGCProjectDataType = null;
+
+let originalMessage = null;
+
+let originalFileName = "";
+
+
+/* ============================================================
+   6. KHỞI TẠO PROTOBUF
+   ============================================================ */
+
+function initProtobuf() {
+
+    const loadingEl =
+        document.getElementById("loadingIndicator");
+
+    const uploadBox =
+        document.getElementById("uploadBox");
+
+
+    if (typeof protobuf === "undefined") {
+
+        loadingEl.className =
+            "status-msg error-box";
+
+        loadingEl.textContent =
+            "❌ Không thể tải thư viện Protobuf. Hãy kiểm tra kết nối mạng.";
+
+        return;
+    }
+
+
+    try {
+
+        const root =
+            protobuf
+                .parse(
+                    protoSchema,
+                    { keepCase: true }
+                )
+                .root;
+
+
+        UGCProjectDataType =
+            root.lookupType(
+                "UGCProjectData"
+            );
+
+
+        const testMsg =
+            UGCProjectDataType.create({});
+
+
+        UGCProjectDataType
+            .encode(testMsg)
+            .finish();
+
+
+        loadingEl.classList.add(
+            "hidden"
+        );
+
+        uploadBox.classList.remove(
+            "disabled"
+        );
+
+
+    } catch (e) {
+
+        loadingEl.className =
+            "status-msg error-box";
+
+        loadingEl.textContent =
+            "❌ Lỗi khởi tạo Protobuf: " +
+            e.message;
+    }
+}
+
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initProtobuf
+    );
+
+} else {
+
+    initProtobuf();
+}
+
+
+/* ============================================================
+   7. CHỌN FILE
+   ============================================================ */
+
+document
+    .getElementById("uploadBox")
+    .addEventListener(
+        "click",
+        function () {
+
+            if (!UGCProjectDataType) {
+
+                showError(
+                    "Hệ thống chưa sẵn sàng. Vui lòng đợi một chút rồi thử lại."
+                );
+
+                return;
             }
-        };
-        reader.readAsArrayBuffer(file);
-    });
 
-    // ============================================================
-    // 7) HELPER
-    // ============================================================
-    function formatName(name) {
-        return name.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase()).trim();
-    }
+            document
+                .getElementById("fileInput")
+                .click();
+        }
+    );
 
-    function showError(m) {
-        const eb = document.getElementById('errorBox');
-        eb.textContent = '❌ ' + m;
-        eb.classList.remove('hidden');
-    }
 
-    // ============================================================
-    // 8) HIỂN THỊ SETTINGS
-    // ============================================================
-    function displaySettings() {
-        const container = document.getElementById('settingsContainer');
-        container.innerHTML = '';
-        document.getElementById('buttonGroup').classList.remove('hidden');
+/* ============================================================
+   8. ĐỌC FILE
+   ============================================================ */
 
-        // Gom settings từ tất cả wrapper
-        const fileSettings = [];
-        if (originalMessage.ShahGCreator && Array.isArray(originalMessage.ShahGCreator.settings)) {
-            originalMessage.ShahGCreator.settings.forEach(w => {
-                if (w && Array.isArray(w.settings)) {
-                    fileSettings.push(...w.settings);
+document
+    .getElementById("fileInput")
+    .addEventListener(
+        "change",
+        function (e) {
+
+            const file =
+                e.target.files[0];
+
+            if (!file) return;
+
+
+            if (!UGCProjectDataType) {
+
+                showError(
+                    "UGCProjectDataType chưa được tải."
+                );
+
+                return;
+            }
+
+
+            originalFileName =
+                file.name;
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function (ev) {
+
+                    try {
+
+                        originalMessage =
+                            UGCProjectDataType.decode(
+                                new Uint8Array(
+                                    ev.target.result
+                                )
+                            );
+
+
+                        displaySettings();
+
+
+                        document
+                            .getElementById(
+                                "infoBox"
+                            )
+                            .classList.remove(
+                                "hidden"
+                            );
+
+
+                        document
+                            .getElementById(
+                                "errorBox"
+                            )
+                            .classList.add(
+                                "hidden"
+                            );
+
+
+                    } catch (err) {
+
+                        showError(
+                            "Không thể đọc file: " +
+                            err.message
+                        );
+                    }
+                };
+
+
+            reader.readAsArrayBuffer(
+                file
+            );
+        }
+    );
+
+
+/* ============================================================
+   9. TÊN HIỂN THỊ
+   ============================================================ */
+
+function getVietnameseName(name) {
+
+    return (
+        vietnameseNames[name]
+        ||
+        name
+    );
+}
+
+
+/* ============================================================
+   10. HIỂN THỊ LỖI
+   ============================================================ */
+
+function showError(message) {
+
+    const errorBox =
+        document.getElementById(
+            "errorBox"
+        );
+
+    errorBox.textContent =
+        "❌ " + message;
+
+    errorBox.classList.remove(
+        "hidden"
+    );
+}
+
+
+/* ============================================================
+   11. HIỂN THỊ SETTINGS
+   ============================================================ */
+
+function displaySettings() {
+
+    const container =
+        document.getElementById(
+            "settingsContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    document
+        .getElementById(
+            "buttonGroup"
+        )
+        .classList.remove(
+            "hidden"
+        );
+
+
+    const fileSettings = [];
+
+
+    /*
+       LƯU Ý:
+       ShahGCreator là tên field protobuf.
+       KHÔNG ĐỔI TÊN NÀY.
+    */
+
+    if (
+        originalMessage.ShahGCreator &&
+        Array.isArray(
+            originalMessage
+                .ShahGCreator
+                .settings
+        )
+    ) {
+
+        originalMessage
+            .ShahGCreator
+            .settings
+            .forEach(wrapper => {
+
+                if (
+                    wrapper &&
+                    Array.isArray(
+                        wrapper.settings
+                    )
+                ) {
+
+                    fileSettings.push(
+                        ...wrapper.settings
+                    );
                 }
             });
-        }
+    }
 
-        for (const [catName, settingNames] of Object.entries(categoryMapping)) {
-            const section = document.createElement('div');
-            section.className = 'category-section';
 
-            const header = document.createElement('div');
-            header.className = 'category-header';
-            header.textContent = catName;
-            section.appendChild(header);
+    for (
+        const [
+            categoryName,
+            settingNames
+        ]
+        of Object.entries(
+            categoryMapping
+        )
+    ) {
 
-            const grid = document.createElement('div');
-            grid.className = 'settings-grid';
 
-            settingNames.forEach(sName => {
-                const meta = settingsMetadata.find(m => m.Name === sName);
+        const section =
+            document.createElement(
+                "div"
+            );
+
+        section.className =
+            "category-section";
+
+
+        const header =
+            document.createElement(
+                "div"
+            );
+
+        header.className =
+            "category-header";
+
+        header.textContent =
+            categoryName;
+
+
+        section.appendChild(
+            header
+        );
+
+
+        const grid =
+            document.createElement(
+                "div"
+            );
+
+        grid.className =
+            "settings-grid";
+
+
+        settingNames.forEach(
+            settingName => {
+
+                const meta =
+                    settingsMetadata.find(
+                        item =>
+                            item.Name ===
+                            settingName
+                    );
+
+
                 if (!meta) return;
 
-                const data = fileSettings.find(d => d.id === meta.ID)
-                    || { id: meta.ID, value: 0, ratio: 0, enable: false };
 
-                const div = document.createElement('div');
-                div.className = 'setting-item';
+                const data =
+                    fileSettings.find(
+                        item =>
+                            item.id ===
+                            meta.ID
+                    )
+                    ||
+                    {
+                        id: meta.ID,
+                        value: 0,
+                        ratio: 0,
+                        enable: false
+                    };
 
-                if (meta.Type === 'boolean') {
-                    div.innerHTML = `
-                        <label class="checkbox-container">
-                            <span>${formatName(meta.Name)}</span>
-                            <input type="checkbox" id="field_${meta.ID}" ${data.enable ? 'checked' : ''}>
-                        </label>`;
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+                item.className =
+                    "setting-item";
+
+
+                const displayName =
+                    getVietnameseName(
+                        meta.Name
+                    );
+
+
+                if (
+                    meta.Type ===
+                    "boolean"
+                ) {
+
+                    item.innerHTML = `
+
+                        <label
+                            class="checkbox-container"
+                        >
+
+                            <span>
+                                ${displayName}
+                            </span>
+
+                            <input
+                                type="checkbox"
+                                id="field_${meta.ID}"
+                                ${data.enable ? "checked" : ""}
+                            >
+
+                        </label>
+
+                    `;
+
                 } else {
-                    const isFloat = meta.Type === 'float';
-                    const val = isFloat ? (data.ratio || 0) : (data.value || 0);
-                    div.innerHTML = `
-                        <h3>${formatName(meta.Name)}</h3>
-                        <input type="number" id="field_${meta.ID}" value="${val}" step="${isFloat ? '0.01' : '1'}">
+
+                    const isFloat =
+                        meta.Type ===
+                        "float";
+
+
+                    const value =
+                        isFloat
+                            ? (
+                                data.ratio || 0
+                            )
+                            : (
+                                data.value || 0
+                            );
+
+
+                    item.innerHTML = `
+
+                        <h3>
+                            ${displayName}
+                        </h3>
+
+                        <input
+                            type="number"
+                            id="field_${meta.ID}"
+                            value="${value}"
+                            step="${isFloat ? "0.01" : "1"}"
+                        >
+
                     `;
                 }
-                grid.appendChild(div);
-            });
 
-            section.appendChild(grid);
-            container.appendChild(section);
-        }
+
+                grid.appendChild(
+                    item
+                );
+            }
+        );
+
+
+        section.appendChild(
+            grid
+        );
+
+
+        container.appendChild(
+            section
+        );
     }
+}
 
-    // ============================================================
-    // 9) LƯU & TẢI XUỐNG
-    // ============================================================
-    document.getElementById('downloadBtn').addEventListener('click', function () {
-        try {
-            if (!UGCProjectDataType) {
-                return showError('UGCProjectDataType chưa được định nghĩa.');
-            }
-            if (!originalMessage) {
-                return showError('Chưa có file nào được tải lên.');
-            }
 
-            if (!originalMessage.ShahGCreator) {
-                originalMessage.ShahGCreator = { settings: [], version: 0 };
-            }
-            if (!Array.isArray(originalMessage.ShahGCreator.settings) || originalMessage.ShahGCreator.settings.length === 0) {
-                originalMessage.ShahGCreator.settings = [{ settings: [] }];
-            }
+/* ============================================================
+   12. LƯU FILE
+   ============================================================ */
 
-            const settingsTargetList = originalMessage.ShahGCreator.settings[0].settings
-                || (originalMessage.ShahGCreator.settings[0].settings = []);
+document
+    .getElementById("downloadBtn")
+    .addEventListener(
+        "click",
+        function () {
 
-            settingsMetadata.forEach(meta => {
-                const el = document.getElementById(`field_${meta.ID}`);
-                if (!el) return;
+            try {
 
-                let target = settingsTargetList.find(s => s.id === meta.ID);
-                if (!target) {
-                    target = { id: meta.ID, enable: false, value: 0, ratio: 0 };
-                    settingsTargetList.push(target);
+                if (
+                    !UGCProjectDataType
+                ) {
+
+                    showError(
+                        "Hệ thống Protobuf chưa sẵn sàng."
+                    );
+
+                    return;
                 }
 
-                if (meta.Type === 'boolean') {
-                    target.enable = el.checked;
-                } else if (meta.Type === 'float') {
-                    target.ratio = parseFloat(el.value) || 0;
-                } else {
-                    target.value = parseInt(el.value, 10) || 0;
-                }
-            });
 
-            const buffer = UGCProjectDataType.encode(originalMessage).finish();
-            const blob = new Blob([buffer], { type: 'application/octet-stream' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = originalFileName || 'ProjectData_slot_x.bytes';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-        } catch (e) {
-            showError('Lỗi lưu file: ' + e.message);
+                if (!originalMessage) {
+
+                    showError(
+                        "Chưa có file nào được tải lên."
+                    );
+
+                    return;
+                }
+
+
+                /*
+                   KHÔNG ĐỔI ShahGCreator
+                */
+
+                if (
+                    !originalMessage.ShahGCreator
+                ) {
+
+                    originalMessage.ShahGCreator = {
+
+                        settings: [],
+
+                        version: 0
+                    };
+                }
+
+
+                if (
+                    !Array.isArray(
+                        originalMessage
+                            .ShahGCreator
+                            .settings
+                    )
+                    ||
+                    originalMessage
+                        .ShahGCreator
+                        .settings
+                        .length === 0
+                ) {
+
+                    originalMessage
+                        .ShahGCreator
+                        .settings = [
+
+                            {
+                                settings: []
+                            }
+
+                        ];
+                }
+
+
+                const wrapper =
+                    originalMessage
+                        .ShahGCreator
+                        .settings[0];
+
+
+                const settingsTargetList =
+                    wrapper.settings
+                    ||
+                    (
+                        wrapper.settings =
+                            []
+                    );
+
+
+                settingsMetadata.forEach(
+                    meta => {
+
+                        const element =
+                            document.getElementById(
+                                `field_${meta.ID}`
+                            );
+
+
+                        if (!element) return;
+
+
+                        let target =
+                            settingsTargetList.find(
+                                setting =>
+                                    setting.id ===
+                                    meta.ID
+                            );
+
+
+                        if (!target) {
+
+                            target = {
+
+                                id: meta.ID,
+
+                                enable: false,
+
+                                value: 0,
+
+                                ratio: 0
+                            };
+
+
+                            settingsTargetList.push(
+                                target
+                            );
+                        }
+
+
+                        if (
+                            meta.Type ===
+                            "boolean"
+                        ) {
+
+                            target.enable =
+                                element.checked;
+
+                        }
+
+                        else if (
+                            meta.Type ===
+                            "float"
+                        ) {
+
+                            target.ratio =
+                                parseFloat(
+                                    element.value
+                                ) || 0;
+
+                        }
+
+                        else {
+
+                            target.value =
+                                parseInt(
+                                    element.value,
+                                    10
+                                ) || 0;
+                        }
+
+                    }
+                );
+
+
+                const buffer =
+                    UGCProjectDataType
+                        .encode(
+                            originalMessage
+                        )
+                        .finish();
+
+
+                const blob =
+                    new Blob(
+                        [buffer],
+                        {
+                            type:
+                                "application/octet-stream"
+                        }
+                    );
+
+
+                const downloadLink =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                downloadLink.href =
+                    URL.createObjectURL(
+                        blob
+                    );
+
+
+                downloadLink.download =
+                    originalFileName
+                    ||
+                    "ProjectData_slot_x.bytes";
+
+
+                document.body.appendChild(
+                    downloadLink
+                );
+
+
+                downloadLink.click();
+
+
+                document.body.removeChild(
+                    downloadLink
+                );
+
+
+                setTimeout(
+                    () => {
+
+                        URL.revokeObjectURL(
+                            downloadLink.href
+                        );
+
+                    },
+                    1000
+                );
+
+
+            } catch (error) {
+
+                showError(
+                    "Lỗi khi lưu file: " +
+                    error.message
+                );
+            }
         }
-    });
-    </script>
+    );
+
+</script>
+
 </body>
-</html>
+    </html>
